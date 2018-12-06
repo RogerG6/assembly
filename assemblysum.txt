@@ -43,13 +43,13 @@
 							OF	DF	IF	TF	SF	ZF		AF		PF		CF	
 			--------------------------------------------------------------------
 					0			1
-			OF		no overfow	overfow			溢出，针对signed
+			OF		no overfow		overfow				溢出，针对signed
 			DF		cld			std				数据传送
-			SF		>=0    		<0				符号位
+			SF		>=0    			<0				符号位
 			ZF		!=0			0				结果为0与否
 			AF
-			PF		odd			even			1的个数的奇偶
-			CF		carry		no carry		进位，针对unsigned
+			PF		odd			even				1的个数的奇偶
+			CF		carry			no carry			进位，针对unsigned
 			------
 			IF		cli			sti				可屏蔽中断响应与否
 			TF									单步中断
