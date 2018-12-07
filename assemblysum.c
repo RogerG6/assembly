@@ -138,7 +138,7 @@
 		movsb,movsw
 		cmps,scas,lods,stos
 	8. 其他
-		org
+		org：传送时，从偏移地址开始偏移		eg: org 200h
 		seg：取某一标号的段地址
 		offset：取偏移地址
 //中断
