@@ -210,11 +210,11 @@
 			```
 #### DOS中断例程
 * int 21h
-			```
-			mov ah,4ch	;4ch代表调用第21h号中断例程中的4ch号子程序，功能为程序返回<br>
-			mov al,0	;返回值<br>
-			int 21h
-			```<br>
+```
+mov ah,4ch	;4ch代表调用第21h号中断例程中的4ch号子程序，功能为程序返回<br>
+mov al,0	;返回值<br>
+int 21h
+```<br>
 			```
 			mov ax,data	<br>
 			mov ds,ax<br>
