@@ -40,6 +40,7 @@
 		IP,SI,SP,BP,DI——存放偏移地址，16bit。
 			其中，SI/DI不能分成2个8bit寄存器使用
 		PSW(程序状态字)
+		```
 			15	14	13	12	11	10	9	8	7	6	5	4	3	2	1	0
 							OF	DF	IF	TF	SF	ZF		AF		PF		CF	
 			--------------------------------------------------------------------
@@ -54,6 +55,7 @@
 			------
 			IF		cli			sti				可屏蔽中断响应与否
 			TF									单步中断
+			```
 	2. 按使用分
 		CS-IP：命令段，指向哪个地址，就该地址开始执行其中的命令
 		DS-	 ：数据段
@@ -72,20 +74,22 @@
 		直接寻址：[idata]
 		reg 间接寻址：[bx],[si],[di],[bp]
 		ret 相对寻址：[bx+idata]
-							eg: mov ax,200[bx]
-								mov ax,[bx].200
+							eg:<br>``` mov ax,200[bx]
+								mov ax,[bx].200```
 					  [si+idata]
 					  [di+idata]
 					  [bp+idata]
 		基址变址寻址：[bx+si],[bx+di]	eg: mov ax,[bx][si]
 					  [bp+si],[bp+di]
 		相对基址变址寻址：[bx+si+idata]
-								eg: mov ax,200[bx][si]
-									mov ax,[bx].200[si]
-									mov ax,[bx][si].200
 						  [bx+di+idata]
 						  [bp+si+idata]
 						  [bp+di+idata]
+						  ```
+						  eg:<br> mov ax,200[bx][si]
+									mov ax,[bx].200[si]
+									mov ax,[bx][si].200
+						```
 ## 指令
 	1. Debug命令
 		R：查看、改变寄存器的值
@@ -100,9 +104,7 @@
 		push,pop
 		pushf,popf
 		xchg
-		in, out(端口读写指令)
-			eg: in al,20h	从20h读入一个Byte到al
-				out 20h,al	从al往20h写入一个Byte
+		
 	3. 算术运算指令
 		add,sub
 		adc：进位加
@@ -118,9 +120,12 @@
 			shl: 1） 将寄存器or内存中的数据左移位
 				 2） 将最后移出的一位写入CF中
 				 3） 最低位用0补充 
-			eg: 1) shl 1
-				2) mov cl,4
-				   shl cl
+			eg: <br>
+				```
+				shl 1
+				mov cl,4		;移动位数必须用cl存放
+				shl cl
+				```<br>
 		sal,sar,rol,ror,rcl,rcr
 	5. 转移指令
 		无条件转移：jmp
@@ -144,6 +149,9 @@
 		org：传送时，从偏移地址开始偏移		eg: org 200h
 		seg：取某一标号的段地址
 		offset：取偏移地址
+		in, out(端口读写指令)
+			eg: in al,20h	从20h读入一个Byte到al
+				out 20h,al	从al往20h写入一个Byte
 ## 中断
 ### 内中断：来自cpu内部
 		分类
@@ -178,5 +186,40 @@
 				
 ### 外中断：来自cpu外部，一般为外设
 #### 可屏蔽中断：当cpu检测到可屏蔽中断信息时，若IF=1,则执行完指令后呼应;若IF=0 ，则不响应
-		int 9	键盘读写
 #### 不可屏蔽中断：cpu必须响应的外中断
+
+--------------
+#### BIOS中断例程
+* int 10h
+			内部通过ah来传递子程序的编号
+			eg: <br>
+			```
+			mov ah,2   ;置光标
+			mov bh,0   ;第0页
+			mov dh,5   ;第5行
+			mov dl,12  ;第12列
+			int 10h
+			```<br>
+			```
+			mov ah,9	;在光标位置显示字符
+			mov al,'a'	;字符
+			mov bl,7	;颜色属性
+			mov bh,0	;第0页
+			mov cx,3	;字符重复次数
+			int 10h	
+			```
+#### DOS中断例程
+* int 21h
+			```
+			mov ah,4ch	;4ch代表调用第21h号中断例程中的4ch号子程序，功能为程序返回
+			mov al,0	;返回值
+			int 21h
+			```<br>
+			```
+			mov ax,data	
+			mov ds,ax
+			mov dx,0	;ds:[dx]指向字符串的首地址,字符串需用$结束。
+			mov ah,9	;9号子程序功能为在光标位置显示字符串，如果字符串较长，遇到行尾，会自动转到下一行开头显示;
+						 如果到了最后一行，还能自动上卷一行
+			int 21h		
+			```
