@@ -127,6 +127,8 @@
 		条件转移：jcxz,je,jb,ja,jna,jnb
 		循环：loop
 		过程：call,ret,retf
+			ret: pop ip, 近转移
+			retf: pop ip, pop cs, 远转移
 		中断：int,iret
 	6. 处理机控制指令
 		cld,std
