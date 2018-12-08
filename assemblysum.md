@@ -211,10 +211,9 @@
 			mov ah,0	;功能号0：从键盘缓冲区读取一个键盘输入。结果：(ah)=扫描码，(al)=ASCII<br>	
 			int 16h		 检测缓冲区有无数据，有则执行0号功能，无则继续检测。直到键盘输入数据，缓冲区中有数据<br><br>		
 * int 13h<br>	
-			mov ax,0 <br>	
-			mov es,ax <br>	
-			mov bx,200h		;es:[bx]指向接收从扇区读入数据的内存区<br>	
-			
+			mov ax,0 	
+			mov es,ax 	
+			mov bx,200h		;es:[bx]指向接收从扇区读入数据的内存区
 			mov al,1	;读取的扇区数
 			mov ch,0	;磁道号
 			mov cl,1	;扇区号
